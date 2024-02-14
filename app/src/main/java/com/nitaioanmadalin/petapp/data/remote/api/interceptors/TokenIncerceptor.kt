@@ -16,23 +16,33 @@ class TokenInterceptor(private val tokenUrl: String, private val clientId: Strin
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
+        var request = originalRequest
 
-        if (accessToken == null) {
-            obtainAccessToken()
+        accessToken?.let { token ->
+            request = originalRequest.newBuilder()
+                .header("Authorization", "Bearer $token")
+                .build()
         }
 
-        Log.d(TAG, "Access Token: $accessToken")
+        val response = chain.proceed(request)
 
-        val newRequest = originalRequest.newBuilder()
-            .header("Authorization", "Bearer $accessToken")
-            .build()
+        if (response.code == 401 || accessToken == null) {
+            accessToken = obtainAccessToken()
+            if (accessToken != null) {
+                response.close()
+                request = originalRequest.newBuilder()
+                    .header("Authorization", "Bearer $accessToken")
+                    .build()
+                return chain.proceed(request)
+            }
+        }
 
-        Log.d(TAG, "New Request: $newRequest")
+        Log.d(TAG, accessToken.toString())
 
-        return chain.proceed(newRequest)
+        return response
     }
 
-    private fun obtainAccessToken() {
+    private fun obtainAccessToken(): String? {
         val requestBody = JSONObject()
             .put("grant_type", "client_credentials")
             .put("client_id", clientId)
@@ -49,9 +59,9 @@ class TokenInterceptor(private val tokenUrl: String, private val clientId: Strin
 
         val response = client.newCall(request).execute()
 
-        if (response.isSuccessful) {
+        return if (response.isSuccessful) {
             val jsonResponse = response.body?.string()
-            accessToken = jsonResponse?.let { JSONObject(it).getString("access_token") }
+            jsonResponse?.let { JSONObject(it).getString("access_token") }
         } else {
             throw SecurityException("Access token could not be retrieved!")
         }
