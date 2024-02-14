@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/petListFragment">
+
+    <fragment
+        android:id="@+id/petListFragment"
+        android:name="com.nitaioanmadalin.petapp.ui.petlist.PetListFragment">
+
+        <action
+            android:id="@+id/petlist_to_details"
+            app:destination="@id/petDetailsFragment"
+            />
+
+    </fragment>
+
+    <fragment android:id="@+id/petDetailsFragment"
+        android:name="com.nitaioanmadalin.petapp.ui.petdetails.PetDetailsFragment">
+
+        <argument
+            android:name="pet"
+            app:argType="com.nitaioanmadalin.petapp.domain.model.Pet"
+            app:nullable="false"/>
+
+    </fragment>
+</navigation>
