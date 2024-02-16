@@ -42,7 +42,7 @@ import com.nitaioanmadalin.petapp.domain.model.Pet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DeviceDetailsScreen(
+fun PetDetailsScreen(
     pet: Pet,
     navigator: NavController
 ) {
@@ -57,7 +57,7 @@ fun DeviceDetailsScreen(
 
     Scaffold(
         topBar = {
-            DeviceDetailsTopBar {
+            PetDetailsTopBar {
                 navigator.popBackStack()
             }
         }
@@ -120,7 +120,7 @@ fun PropertyCard(property: Pair<String, String?>) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DeviceDetailsTopBar(
+fun PetDetailsTopBar(
     onBackButtonClicked: () -> Unit
 ) {
     val navigationIcon: @Composable () -> Unit = {

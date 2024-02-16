@@ -1,10 +1,9 @@
-package com.nitaioanmadalin.petapp.domain.usecase.getdevices
+package com.nitaioanmadalin.petapp.domain.usecase.getpets
 
 import com.nitaioanmadalin.petapp.core.utils.network.AppResult
 import com.nitaioanmadalin.petapp.domain.model.Pet
 import com.nitaioanmadalin.petapp.domain.repository.PetRepository
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.flow.Flow
 
 class GetPetsUseCaseImpl(

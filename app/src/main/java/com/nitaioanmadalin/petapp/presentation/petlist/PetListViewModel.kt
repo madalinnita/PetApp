@@ -8,7 +8,7 @@ import com.nitaioanmadalin.petapp.core.utils.log.LogProvider
 import com.nitaioanmadalin.petapp.core.utils.network.AppResult
 import com.nitaioanmadalin.petapp.core.utils.network.ConnectivityUtils
 import com.nitaioanmadalin.petapp.core.utils.rx.SchedulerProvider
-import com.nitaioanmadalin.petapp.domain.usecase.getdevices.GetPetsUseCase
+import com.nitaioanmadalin.petapp.domain.usecase.getpets.GetPetsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.coroutines.delay

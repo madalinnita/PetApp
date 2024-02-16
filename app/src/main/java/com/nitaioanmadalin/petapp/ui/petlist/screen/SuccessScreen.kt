@@ -26,13 +26,13 @@ import com.nitaioanmadalin.petapp.ui.theme.PetAppTheme
 @Composable
 fun SuccessScreen(
     data: List<Pet>,
-    onDeviceClicked: (Pet) -> Unit
+    onPetClicked: (Pet) -> Unit
 ) {
     LazyColumn(contentPadding = PaddingValues(16.dp)) {
         items(data.size) { index ->
-            DeviceInfo(
+            PetInfo(
                 item = data[index],
-                onDeviceClicked = onDeviceClicked
+                onPetClicked = onPetClicked
             )
         }
     }
@@ -55,14 +55,14 @@ fun SuccessScreenPreview() {
                 )
             )
         }
-        SuccessScreen(data = items, onDeviceClicked = {})
+        SuccessScreen(data = items, onPetClicked = {})
     }
 }
 
 @Composable
-fun DeviceInfo(
+fun PetInfo(
     item: Pet,
-    onDeviceClicked: (Pet) -> Unit
+    onPetClicked: (Pet) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -71,7 +71,7 @@ fun DeviceInfo(
             .clip(RoundedCornerShape(8.dp))
             .background(Color.White)
             .clickable {
-                onDeviceClicked.invoke(item)
+                onPetClicked.invoke(item)
             },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 10.dp

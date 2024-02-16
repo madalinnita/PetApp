@@ -15,8 +15,8 @@ import com.nitaioanmadalin.petapp.data.local.PetDatabase
 import com.nitaioanmadalin.petapp.data.remote.api.PetApi
 import com.nitaioanmadalin.petapp.data.repository.PetRepositoryImpl
 import com.nitaioanmadalin.petapp.domain.repository.PetRepository
-import com.nitaioanmadalin.petapp.domain.usecase.getdevices.GetPetsUseCase
-import com.nitaioanmadalin.petapp.domain.usecase.getdevices.GetPetsUseCaseImpl
+import com.nitaioanmadalin.petapp.domain.usecase.getpets.GetPetsUseCase
+import com.nitaioanmadalin.petapp.domain.usecase.getpets.GetPetsUseCaseImpl
 import com.nitaioanmadalin.petapp.data.remote.api.PetApi.Companion.TOKEN_URL
 import com.nitaioanmadalin.petapp.data.remote.api.interceptors.TokenInterceptor
 import dagger.Module

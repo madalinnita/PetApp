@@ -7,7 +7,7 @@ import com.nitaioanmadalin.petapp.core.utils.network.AppResult
 import com.nitaioanmadalin.petapp.core.utils.network.ConnectivityUtils
 import com.nitaioanmadalin.petapp.core.utils.rx.SchedulerProvider
 import com.nitaioanmadalin.petapp.domain.model.Pet
-import com.nitaioanmadalin.petapp.domain.usecase.getdevices.GetPetsUseCase
+import com.nitaioanmadalin.petapp.domain.usecase.getpets.GetPetsUseCase
 import com.nitaioanmadalin.petapp.presentation.petlist.PetListScreenState
 import com.nitaioanmadalin.petapp.presentation.petlist.PetListViewModel
 import io.mockk.MockKAnnotations

@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nitaioanmadalin.petapp.ui.base.BaseComposeWrapperFragment
-import com.nitaioanmadalin.petapp.ui.petdetails.screen.DeviceDetailsScreen
+import com.nitaioanmadalin.petapp.ui.petdetails.screen.PetDetailsScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,7 +15,7 @@ class PetDetailsFragment: BaseComposeWrapperFragment() {
 
     @Composable
     override fun FragmentContent(modifier: Modifier) {
-        DeviceDetailsScreen(
+        PetDetailsScreen(
             pet = args.pet,
             navigator = findNavController()
         )
