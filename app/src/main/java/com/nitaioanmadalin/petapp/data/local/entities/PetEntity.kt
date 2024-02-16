@@ -17,6 +17,7 @@ data class PetEntity(
     val gender: String? = null,
     val status: String? = null,
     val distance: Double? = null,
+    val largeImageUrl: String? = null
 ) {
     fun toPet(): Pet = Pet(
         id = this.id,
@@ -25,6 +26,7 @@ data class PetEntity(
         size = size,
         gender = gender,
         status = status,
-        distance=distance
+        distance = distance,
+        largeImageUrl = largeImageUrl
     )
 }

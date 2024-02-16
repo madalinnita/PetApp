@@ -8,7 +8,7 @@ import retrofit2.http.Headers
 
 interface PetApi {
 
-    @GET("/v2/animals?type=dog&page=2")
+    @GET("/v2/animals?type=dog&page=1")
     suspend fun getAnimals(): PetResponse
 
     @GET("/v2/animals?type=dog&page=2")

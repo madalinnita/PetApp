@@ -12,5 +12,5 @@ data class Pet(
     val gender: String? = null,
     val status: String? = null,
     val distance: Double? = null,
-
+    val largeImageUrl: String? = null
 ): Parcelable

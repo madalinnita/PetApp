@@ -10,6 +10,7 @@ data class PetDto(
     val gender: String? = null,
     val status: String? = null,
     val distance: Double? = null,
+    val photos: List<PhotoDto?>? = null
 ) {
     fun toPetEntity() = PetEntity(
         id = this.id,
@@ -18,6 +19,7 @@ data class PetDto(
         size = size,
         gender = gender,
         status = status,
-        distance=distance
+        distance= distance,
+        largeImageUrl = if(!photos.isNullOrEmpty()) photos.first()?.large else null
     )
 }
