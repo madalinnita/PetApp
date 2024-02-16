@@ -7,11 +7,10 @@ import com.nitaioanmadalin.petapp.core.utils.coroutine.CoroutineDispatchersProvi
 import com.nitaioanmadalin.petapp.core.utils.log.LogProvider
 import com.nitaioanmadalin.petapp.core.utils.network.AppResult
 import com.nitaioanmadalin.petapp.core.utils.network.ConnectivityUtils
+import com.nitaioanmadalin.petapp.core.utils.rx.SchedulerProvider
 import com.nitaioanmadalin.petapp.domain.usecase.getdevices.GetPetsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,6 +25,7 @@ class PetListViewModel @Inject constructor(
     private val getPetsUseCase: GetPetsUseCase,
     private val connectivityUtils: ConnectivityUtils,
     private val dispatchers: CoroutineDispatchersProvider,
+    private val scheduler: SchedulerProvider,
     private val logProvider: LogProvider
 ) : ViewModel() {
 
@@ -49,8 +49,8 @@ class PetListViewModel @Inject constructor(
     fun getRxData() {
         val disposable = getPetsUseCase
             .getRxPetList()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).subscribe({
+            .subscribeOn(scheduler.io())
+            .observeOn(scheduler.main()).subscribe({
                 _state.value = when (it) {
                     is AppResult.Error -> {
                         logProvider.logError(TAG, "Error - ${it.message}")

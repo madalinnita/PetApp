@@ -9,6 +9,8 @@ import com.nitaioanmadalin.petapp.core.utils.coroutine.CoroutineDispatchersProvi
 import com.nitaioanmadalin.petapp.core.utils.log.LogProvider
 import com.nitaioanmadalin.petapp.core.utils.log.LogProviderImpl
 import com.nitaioanmadalin.petapp.core.utils.network.ConnectivityUtils
+import com.nitaioanmadalin.petapp.core.utils.rx.SchedulerProvider
+import com.nitaioanmadalin.petapp.core.utils.rx.SchedulerProviderImpl
 import com.nitaioanmadalin.petapp.data.local.PetDatabase
 import com.nitaioanmadalin.petapp.data.remote.api.PetApi
 import com.nitaioanmadalin.petapp.data.repository.PetRepositoryImpl
@@ -40,7 +42,7 @@ object  PetModule {
 
     @Provides
     @Singleton
-    fun provideCosmoDevicesUseCase(
+    fun provideGetPetsUseCase(
         repository: PetRepository
     ): GetPetsUseCase {
         return GetPetsUseCaseImpl(repository)
@@ -48,7 +50,7 @@ object  PetModule {
 
     @Provides
     @Singleton
-    fun provideCosmoDevicesRepository(
+    fun providePetRepository(
         db: PetDatabase,
         api: PetApi
     ): PetRepository {
@@ -112,8 +114,15 @@ object  PetModule {
     }
 
     @Provides
+    @Singleton
     fun provideCoroutineDispatchersProvider(): CoroutineDispatchersProvider {
         return CoroutineDispatchersProviderImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSchedulerProvider(): SchedulerProvider {
+        return SchedulerProviderImpl()
     }
 
     @Provides
