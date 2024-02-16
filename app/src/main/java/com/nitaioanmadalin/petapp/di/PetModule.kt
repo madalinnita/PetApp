@@ -13,7 +13,7 @@ import com.nitaioanmadalin.petapp.data.local.PetDatabase
 import com.nitaioanmadalin.petapp.data.remote.api.PetApi
 import com.nitaioanmadalin.petapp.data.repository.PetRepositoryImpl
 import com.nitaioanmadalin.petapp.domain.repository.PetRepository
-import com.nitaioanmadalin.cosmodeviceexplorer.domain.usecase.getdevices.GetPetsUseCase
+import com.nitaioanmadalin.petapp.domain.usecase.getdevices.GetPetsUseCase
 import com.nitaioanmadalin.petapp.domain.usecase.getdevices.GetPetsUseCaseImpl
 import com.nitaioanmadalin.petapp.data.remote.api.PetApi.Companion.TOKEN_URL
 import com.nitaioanmadalin.petapp.data.remote.api.interceptors.TokenInterceptor
@@ -24,6 +24,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -98,6 +99,7 @@ object  PetModule {
             .Builder()
             .baseUrl(PetApi.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .client(client)
             .build()
             .create(PetApi::class.java)
