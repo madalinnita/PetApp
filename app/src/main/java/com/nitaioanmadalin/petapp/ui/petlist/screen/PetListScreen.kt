@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nitaioanmadalin.petapp.core.utils.lifecycle.LifecycleHandler
 import com.nitaioanmadalin.petapp.domain.model.Pet
@@ -25,10 +24,8 @@ fun PetListScreen(
     onPetClicked: (Pet) -> Unit
 ) {
     val viewState by viewModel.state.collectAsStateWithLifecycle()
-    val context = LocalContext.current
-
     LifecycleHandler(
-        onCreate = { viewModel.getData(context = context) }
+        onCreate = { viewModel.getData() }
     )
 
     Scaffold(
@@ -39,7 +36,7 @@ fun PetListScreen(
         Surface(Modifier.padding(paddingValues)) {
             when (val state = viewState) {
                 is PetListScreenState.Error -> ErrorScreen(
-                    onRetry = { viewModel.getData(context) },
+                    onRetry = { viewModel.getData() },
                     isInternetConnectionAvailable = state.isInternetAvailable
                 )
 
