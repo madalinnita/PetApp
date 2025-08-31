@@ -16,8 +16,8 @@ class PetRepositoryImpl(
 
     override fun getAnimals(type: String, page: Int): Flow<AppResult<List<Pet>>> = flow {
         emit(AppResult.Loading())
-        val daoRepositories = petDao.getPets()
-        emit(AppResult.Loading(daoRepositories.map { it.toPet() }))
+        val cachedPets = petDao.getPets()
+        emit(AppResult.Loading(cachedPets.map { it.toPet() }))
 
         try {
             val animalsDto = petApi.getAnimals(type, page).animals

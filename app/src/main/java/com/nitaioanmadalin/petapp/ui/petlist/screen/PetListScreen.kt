@@ -48,7 +48,7 @@ fun PetListScreen(
 
                 is PetListScreenState.Loading -> LoadingScreen()
                 is PetListScreenState.Success -> SuccessScreen(
-                    data = state.repositories,
+                    data = state.pets,
                     onPetClicked = onPetClicked
                 )
             }

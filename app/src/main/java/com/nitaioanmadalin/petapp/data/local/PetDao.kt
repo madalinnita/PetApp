@@ -10,7 +10,7 @@ import com.nitaioanmadalin.petapp.data.local.entities.PetEntity
 interface PetDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPets(repositories: List<PetEntity>)
+    suspend fun insertPets(pets: List<PetEntity>)
 
     @Query("SELECT * FROM petentity")
     suspend fun getPets(): List<PetEntity>
