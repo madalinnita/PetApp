@@ -1,17 +1,22 @@
 package com.nitaioanmadalin.petapp.ui.petlist.screen
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pets
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nitaioanmadalin.petapp.core.utils.lifecycle.LifecycleHandler
 import com.nitaioanmadalin.petapp.domain.model.Pet
@@ -25,10 +30,8 @@ fun PetListScreen(
     onPetClicked: (Pet) -> Unit
 ) {
     val viewState by viewModel.state.collectAsStateWithLifecycle()
-    val context = LocalContext.current
-
     LifecycleHandler(
-        onCreate = { viewModel.getData(context = context) }
+        onCreate = { viewModel.getData() }
     )
 
     Scaffold(
@@ -39,7 +42,7 @@ fun PetListScreen(
         Surface(Modifier.padding(paddingValues)) {
             when (val state = viewState) {
                 is PetListScreenState.Error -> ErrorScreen(
-                    onRetry = { viewModel.getData(context) },
+                    onRetry = { viewModel.getData() },
                     isInternetConnectionAvailable = state.isInternetAvailable
                 )
 
@@ -56,11 +59,20 @@ fun PetListScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PetListTopBar() {
-    TopAppBar(
-        title = { Text("List of pets", color = Color.Black) },
-        colors = TopAppBarDefaults.smallTopAppBarColors(
-            containerColor = Color.LightGray,
-            titleContentColor = Color.White
+    CenterAlignedTopAppBar(
+        title = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = Icons.Filled.Pets,
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(text = "Find your new friend")
+            }
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
         )
     )
 }
