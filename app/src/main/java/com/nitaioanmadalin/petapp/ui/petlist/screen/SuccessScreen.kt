@@ -1,31 +1,32 @@
 package com.nitaioanmadalin.petapp.ui.petlist.screen
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
@@ -57,11 +58,11 @@ fun SuccessScreenPreview() {
         for (index in 1..10) {
             items.add(
                 Pet(
-                  name="Luna",
-                    breed= Breed(primary = "MockPrimary", secondary = "MockSecond", mixed = true, unknown = false),
-                    size="Medium",
-                    gender="Female",
-                    status="Unavailable",
+                    name = "Luna",
+                    breed = Breed(primary = "MockPrimary", secondary = "MockSecond", mixed = true, unknown = false),
+                    size = "Medium",
+                    gender = "Female",
+                    status = "Unavailable",
                     distance = 233.33
                 )
             )
@@ -70,31 +71,29 @@ fun SuccessScreenPreview() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PetInfo(
     item: Pet,
     onPetClicked: (Pet) -> Unit
 ) {
-    Card(
+    ElevatedCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .clip(RoundedCornerShape(8.dp))
-            .background(Color.White)
-            .clickable {
-                onPetClicked.invoke(item)
-            },
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 10.dp
-        ),
-        colors = CardDefaults.cardColors(containerColor = Color.LightGray)
+            .clip(RoundedCornerShape(12.dp))
+            .clickable { onPetClicked(item) },
+        colors = CardDefaults.elevatedCardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        )
     ) {
         Row(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val imageUrl = item.largeImageUrl
-                ?: getRandomisedPhotoUrl()
+            val imageUrl = item.largeImageUrl ?: getRandomisedPhotoUrl()
             Image(
                 painter = rememberImagePainter(
                     data = imageUrl,
@@ -105,46 +104,40 @@ fun PetInfo(
                 contentDescription = null,
                 modifier = Modifier
                     .size(80.dp)
-                    .padding(16.dp),
+                    .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
 
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "Pet name: ${item.name}",
-                    style = MaterialTheme.typography.bodyLarge
+                    text = item.name ?: "Unnamed",
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "Breed: ${item.breed?.primary ?: "N/A"}",
-                    style = MaterialTheme.typography.bodyMedium
+                    text = item.breed?.primary ?: "N/A",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
             if (item.status == "adoptable") {
-                Column(modifier = Modifier.padding(8.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally) {
-                    Box(
-                        modifier = Modifier.padding(8.dp),
-                    ) {
-                        Canvas(
-                            modifier = Modifier.size(12.dp)
-                        ) {
-                            drawCircle(
-                                color = Color.Green,
-                                center = center,
-                                radius = size.minDimension / 2f
-                            )
-                        }
-                    }
-                    Text(
-                        text = "Adoptable!",
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(start = 4.dp)
+                AssistChip(
+                    onClick = {},
+                    label = { Text("Adoptable") },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Filled.Check,
+                            contentDescription = null
+                        )
+                    },
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        labelColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                        leadingIconContentColor = MaterialTheme.colorScheme.onSecondaryContainer
                     )
-                }
+                )
             }
         }
     }
@@ -160,3 +153,4 @@ private fun getRandomisedPhotoUrl(): String {
     )
     return listOfUrls.random()
 }
+

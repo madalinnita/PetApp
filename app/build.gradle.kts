@@ -22,6 +22,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        buildConfigField("String", "CLIENT_ID", "\"YOUR_CLIENT_ID\"")
+        buildConfigField("String", "CLIENT_SECRET", "\"YOUR_CLIENT_SECRET\"")
     }
 
     buildTypes {
@@ -42,6 +45,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -70,6 +74,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
     testImplementation("junit:junit:4.13.2")
@@ -90,7 +95,7 @@ dependencies {
     kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
-    implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version")
+    // Removed RxJava dependencies in favour of coroutines
     testImplementation("androidx.arch.core:core-testing:$arch_version")
     testImplementation("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version")
     testImplementation("com.google.dagger:hilt-android-testing:2.38.1")
@@ -110,9 +115,5 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     testImplementation("io.mockk:mockk:1.12.0")
-    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation("io.reactivex.rxjava3:rxjava:3.1.5")
-    implementation("androidx.room:room-rxjava3:$room_version")
-    implementation("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
     implementation("io.coil-kt:coil-compose:1.4.0")
 }

@@ -5,10 +5,10 @@ import com.nitaioanmadalin.petapp.domain.model.Pet
 
 sealed class PetListScreenState {
     data class Loading(
-        val daoRepositories: List<Pet>? = null
+        val cachedPets: List<Pet>? = null
     ) : PetListScreenState()
 
-    data class Success(val repositories: List<Pet>) : PetListScreenState()
+    data class Success(val pets: List<Pet>) : PetListScreenState()
 
     data class Error(
         val ex: Throwable,
